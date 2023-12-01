@@ -1,0 +1,16 @@
+name: Issue Greeting
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run Chatbot Script
+      run: node chatbot.js
+

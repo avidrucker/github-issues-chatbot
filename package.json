@@ -1,0 +1,8 @@
+{
+  "name": "github-issues-chatbot",
+  "version": "1.0.0",
+  "dependencies": {
+    "@octokit/rest": "^18.0.0"
+  }
+}
+
