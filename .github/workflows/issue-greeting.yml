@@ -20,4 +20,8 @@ jobs:
       run: npm install
 
     - name: Run Chatbot Script
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ISSUE_NUMBER: ${{ github.event.issue.number }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
       run: node chatbot.js
