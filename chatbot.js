@@ -16,14 +16,19 @@ async function postGreeting() {
 
   const [owner, repo] = repoName.split('/');
 
-  // get the contributions guidelines link
-  const contributionsLink = await octokit.repos.getContent({
+  // query for contributions guidelines
+  const response = await octokit.repos.getContent({
     owner: owner,
     repo: repo,
     path: 'CONTRIBUTING.md'
   });
 
-  const message = `Hello @${issueCreator}! Thanks for creating an issue. Please follow our [contribution guidelines](${contributionsLink}). If you have any questions, feel free to create new issues.`;
+  // extract the link to the contribution guidelines
+  const contributionsLink = response.data.html_url;
+
+  const contributionDocInfoString = contributionsLink ? `Please follow our [contribution guidelines](${contributionsLink}).` : `This repository does not yet have a contribution guidelines document.`;
+
+  const message = `Hello @${issueCreator}! Thanks for creating an issue. ${contributionDocInfoString} If you have any questions, feel free to create new issues.`;
 
   await octokit.issues.createComment({
     owner,
