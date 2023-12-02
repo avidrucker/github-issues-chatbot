@@ -16,7 +16,14 @@ async function postGreeting() {
 
   const [owner, repo] = repoName.split('/');
 
-  const message = `Hello @${issueCreator}! Thanks for creating an issue. Please follow our [contribution guidelines](https://github.com/avidrucker/github-issues-chatbot/blob/main/CONTRIBUTING.md). If you have any questions, feel free to create new issues.`;
+  // get the contributions guidelines link
+  const contributionsLink = await octokit.repos.getContent({
+    owner: owner,
+    repo: repo,
+    path: 'CONTRIBUTING.md'
+  });
+
+  const message = `Hello @${issueCreator}! Thanks for creating an issue. Please follow our [contribution guidelines](${contributionsLink}). If you have any questions, feel free to create new issues.`;
 
   await octokit.issues.createComment({
     owner,
